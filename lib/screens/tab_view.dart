@@ -1,57 +1,71 @@
 import 'package:accountant/screens/client/client_list.dart';
 import 'package:accountant/screens/dashboard/dashboard.dart';
 import 'package:accountant/screens/order/order_list.dart';
+import 'package:accountant/screens/payment/payment_list.dart';
 import 'package:accountant/screens/product/product_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TabView extends StatefulWidget {
-  @override
+  final Widget child;
+
+  TabView({Key key, this.child}) : super(key: key);
+
   _TabViewState createState() => _TabViewState();
 }
 
 class _TabViewState extends State<TabView> {
+  static int startTabIndex = 0;
+  int _currentTabIndex = startTabIndex;
+
+  final List<Widget> _tabs = [
+    DashboardScreen(),
+    OrderListScreen(),
+    ClientListScreen(),
+    PaymentListScreen(),
+    ProductListScreen(),
+  ];
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentTabIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            title: Text("Statistika"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.airport_shuttle),
-            title: Text("Alqi-Satgi"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Klientler"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bubble_chart),
-            title: Text("Mallar"),
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Expanded(child: _tabs[_currentTabIndex]),
+          BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentTabIndex,
+            onTap: _onTabTapped,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                title: Text("Statistika"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.airport_shuttle),
+                title: Text("Alqi-Satgi"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                title: Text("Klientler"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.attach_money),
+                title: Text("Odeme"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bubble_chart),
+                title: Text("Mallar"),
+              )
+            ],
           ),
         ],
       ),
-      tabBuilder: (BuildContext context, int index) {
-        switch (index) {
-          case 0:
-            return DashboardScreen();
-            break;
-          case 1:
-            return OrderListScreen();
-            break;
-          case 2:
-            return ClientListScreen();
-            break;
-          case 3:
-            return ProductListScreen();
-            break;
-          default:
-            return OrderListScreen();
-        }
-      },
     );
   }
 }

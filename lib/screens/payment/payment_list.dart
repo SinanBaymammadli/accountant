@@ -1,18 +1,18 @@
-import 'package:accountant/models/order.dart';
+import 'package:accountant/models/payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class OrderListScreen extends StatefulWidget {
+class PaymentListScreen extends StatefulWidget {
   @override
-  _OrderListScreenState createState() => _OrderListScreenState();
+  _PaymentListScreenState createState() => _PaymentListScreenState();
 }
 
-class _OrderListScreenState extends State<OrderListScreen> {
+class _PaymentListScreenState extends State<PaymentListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alqi-Satgi'),
+        title: Text('Odeme'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('products').snapshots(),
@@ -42,10 +42,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
-    final order = Order.fromSnapshot(document);
+    final payment = Payment.fromSnapshot(document);
 
     return ListTile(
-      title: Text(order.name),
+      title: Text(payment.name),
     );
   }
 }
