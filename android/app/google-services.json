@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "513955767182",
+    "firebase_url": "https://accountant-18a31.firebaseio.com",
+    "project_id": "accountant-18a31",
+    "storage_bucket": "accountant-18a31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513955767182:android:aad6499d913cc218",
+        "android_client_info": {
+          "package_name": "com.example.accountant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHgfBPkZLIz0KJgcAlw_VEsh7ei_lkPmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513955767182-63i7garhi7342lqtbd6vg92nvt8bpaie.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "513955767182-rl4k06u751gf3bdi9dodpjv1hvb8uta7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.accountant"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
