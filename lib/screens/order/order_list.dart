@@ -1,4 +1,7 @@
+import 'package:accountant/models/client.dart';
 import 'package:accountant/models/order.dart';
+import 'package:accountant/models/product.dart';
+import 'package:accountant/screens/order/order_create.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +18,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
         title: Text('Alqi-Satgi'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('products').snapshots(),
+        stream: Firestore.instance.collection('orders').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -25,12 +28,27 @@ class _OrderListScreenState extends State<OrderListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return OrderCreateScreen();
+              },
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
+    if (documents.length == 0) {
+      return Center(
+        child: Text('Alqi-satgi yoxdur'),
+      );
+    }
+
     return ListView.separated(
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
@@ -44,8 +62,22 @@ class _OrderListScreenState extends State<OrderListScreen> {
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     final order = Order.fromSnapshot(document);
 
+    print('here: ${order.productRef.toString()}');
+
     return ListTile(
-      title: Text(order.name),
+      title: Text('data'),
+      subtitle: StreamBuilder<DocumentSnapshot>(
+        stream: order.productRef.snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || !snapshot.data.exists) {
+            return Text('');
+          }
+
+          Product product = Product.fromSnapshot(snapshot.data);
+
+          return Text(product.name);
+        },
+      ),
     );
   }
 }

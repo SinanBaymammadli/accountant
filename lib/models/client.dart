@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Client {
+  final DocumentReference ref;
   final String name;
-  final int balance;
-  final DocumentReference reference;
+  final double balance;
 
-  Client.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['balance'] != null),
+  Client.fromMap(Map<String, dynamic> map, DocumentReference reference)
+      : ref = reference,
+        assert(map['name'] != null),
         name = map['name'],
-        balance = map['balance'];
+        assert(map['balance'] != null),
+        balance = double.parse(map['balance'].toString());
 
   Client.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
+      : this.fromMap(snapshot.data, snapshot.reference);
 
   @override
   String toString() => "Record<$name>";

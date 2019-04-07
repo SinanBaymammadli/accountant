@@ -41,6 +41,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
+    if (documents.length == 0) {
+      return Center(
+        child: Text('Mal yoxdur'),
+      );
+    }
+
     return ListView.separated(
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),

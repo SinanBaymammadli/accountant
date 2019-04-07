@@ -1,4 +1,6 @@
+import 'package:accountant/models/client.dart';
 import 'package:accountant/models/payment.dart';
+import 'package:accountant/screens/payment/payment_create.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +17,7 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
         title: Text('Odeme'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('products').snapshots(),
+        stream: Firestore.instance.collection('payments').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -25,12 +27,27 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return PaymentCreateScreen();
+              },
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
+    if (documents.length == 0) {
+      return Center(
+        child: Text('Mal yoxdur'),
+      );
+    }
+
     return ListView.separated(
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
@@ -45,7 +62,21 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
     final payment = Payment.fromSnapshot(document);
 
     return ListTile(
-      title: Text(payment.name),
+      leading: Text(payment.toUs ? "Bize odenilib" : "Odemisik"),
+      title: Text('${payment.amount} AZN'),
+      subtitle: Text(payment.date.toDate().toString()),
+      trailing: StreamBuilder<DocumentSnapshot>(
+        stream: payment.clientRef.snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || !snapshot.data.exists) {
+            return Text('');
+          }
+
+          Client client = Client.fromSnapshot(snapshot.data);
+
+          return Text(client.name);
+        },
+      ),
     );
   }
 }

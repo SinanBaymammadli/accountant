@@ -44,23 +44,48 @@ class _TabViewState extends State<TabView> {
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard),
-                title: Text("Statistika"),
+                title: Text(
+                  "Statistika",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.airport_shuttle),
-                title: Text("Alqi-Satgi"),
+                title: Text(
+                  "Alqi-Satgi",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                title: Text("Klientler"),
+                title: Text(
+                  "Klientler",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.attach_money),
-                title: Text("Odeme"),
+                title: Text(
+                  "Odeme",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.bubble_chart),
-                title: Text("Mallar"),
+                title: Text(
+                  "Mallar",
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
               )
             ],
           ),

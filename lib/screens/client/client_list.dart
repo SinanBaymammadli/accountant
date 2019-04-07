@@ -1,4 +1,5 @@
 import 'package:accountant/models/client.dart';
+import 'package:accountant/screens/client/client_create.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -25,12 +26,27 @@ class _ClientListScreenState extends State<ClientListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return ClientCreateScreen();
+              },
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
+    if (documents.length == 0) {
+      return Center(
+        child: Text('Client yoxdur'),
+      );
+    }
+
     return ListView.separated(
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
