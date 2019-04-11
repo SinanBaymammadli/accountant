@@ -7,7 +7,7 @@ class Order {
   final int productAmount;
   final double productPrice;
   final bool isBuy;
-  final Timestamp date;
+  final DateTime date;
   final DocumentReference paymentRef;
 
   Order.fromMap(Map<String, dynamic> map, DocumentReference reference)
@@ -23,7 +23,7 @@ class Order {
         assert(map['is_buy'] != null),
         isBuy = map['is_buy'],
         assert(map['date'] != null),
-        date = map['date'],
+        date = map['date'].toDate(),
         paymentRef = map['payment_ref'];
 
   Order.fromSnapshot(DocumentSnapshot snapshot)

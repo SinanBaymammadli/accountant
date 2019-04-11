@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Payment {
   final DocumentReference ref;
   final int amount;
-  final Timestamp date;
+  final DateTime date;
   final bool toUs;
   final DocumentReference clientRef;
 
@@ -12,7 +12,7 @@ class Payment {
         assert(map['amount'] != null),
         amount = map['amount'],
         assert(map['date'] != null),
-        date = map['date'],
+        date = map['date'].toDate(),
         assert(map['to_us'] != null),
         toUs = map['to_us'],
         assert(map['client_ref'] != null),

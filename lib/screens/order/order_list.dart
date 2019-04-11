@@ -1,4 +1,3 @@
-import 'package:accountant/models/client.dart';
 import 'package:accountant/models/order.dart';
 import 'package:accountant/models/product.dart';
 import 'package:accountant/screens/order/order_create.dart';

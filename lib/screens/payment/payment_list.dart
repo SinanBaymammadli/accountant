@@ -64,7 +64,7 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
     return ListTile(
       leading: Text(payment.toUs ? "Bize odenilib" : "Odemisik"),
       title: Text('${payment.amount} AZN'),
-      subtitle: Text(payment.date.toDate().toString()),
+      subtitle: Text(payment.date.toString()),
       trailing: StreamBuilder<DocumentSnapshot>(
         stream: payment.clientRef.snapshots(),
         builder: (context, snapshot) {

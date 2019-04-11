@@ -9,6 +9,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  Firestore firestore = Firestore();
+
+  @override
+  void initState() {
+    super.initState();
+    firestore.settings(timestampsInSnapshotsEnabled: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           snapshot.data.documents.forEach((doc) {
             final payment = Payment.fromSnapshot(doc);
 
-            if (isToday(payment.date.toDate())) {
+            if (isToday(payment.date)) {
               if (payment.toUs) {
                 income += payment.amount;
               } else {
