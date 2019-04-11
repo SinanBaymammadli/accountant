@@ -1,3 +1,4 @@
+import 'package:accountant/helpers/dateFormatter.dart';
 import 'package:accountant/models/client.dart';
 import 'package:accountant/models/payment.dart';
 import 'package:accountant/screens/payment/payment_create.dart';
@@ -14,10 +15,13 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Odeme'),
+        title: Text('Ödəmələr'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('payments').snapshots(),
+        stream: Firestore.instance
+            .collection('payments')
+            .orderBy('date', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -44,7 +48,7 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
     if (documents.length == 0) {
       return Center(
-        child: Text('Mal yoxdur'),
+        child: Text('Ödəmə yoxdur'),
       );
     }
 
@@ -53,6 +57,7 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int index) {
         DocumentSnapshot document = documents[index];
+
         return _buildListItem(context, document);
       },
     );
@@ -62,9 +67,17 @@ class _PaymentListScreenState extends State<PaymentListScreen> {
     final payment = Payment.fromSnapshot(document);
 
     return ListTile(
-      leading: Text(payment.toUs ? "Bize odenilib" : "Odemisik"),
+      leading: payment.toUs
+          ? Icon(
+              Icons.arrow_downward,
+              color: Colors.green,
+            )
+          : Icon(
+              Icons.arrow_upward,
+              color: Colors.red,
+            ),
       title: Text('${payment.amount} AZN'),
-      subtitle: Text(payment.date.toString()),
+      subtitle: Text(formatDate(payment.date)),
       trailing: StreamBuilder<DocumentSnapshot>(
         stream: payment.clientRef.snapshots(),
         builder: (context, snapshot) {

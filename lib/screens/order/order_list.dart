@@ -1,6 +1,9 @@
+import 'package:accountant/helpers/dateFormatter.dart';
+import 'package:accountant/models/client.dart';
 import 'package:accountant/models/order.dart';
 import 'package:accountant/models/product.dart';
 import 'package:accountant/screens/order/order_create.dart';
+import 'package:accountant/screens/order/order_show.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +20,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
         title: Text('Alqi-Satgi'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('orders').snapshots(),
+        stream: Firestore.instance
+            .collection('orders')
+            .orderBy('date', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -64,7 +70,33 @@ class _OrderListScreenState extends State<OrderListScreen> {
     print('here: ${order.productRef.toString()}');
 
     return ListTile(
-      title: Text('data'),
+      leading: order.isBuy
+          ? Icon(
+              Icons.arrow_downward,
+              color: Colors.green,
+            )
+          : Icon(
+              Icons.arrow_upward,
+              color: Colors.red,
+            ),
+      title: StreamBuilder<DocumentSnapshot>(
+        stream: order.clientRef.snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || !snapshot.data.exists) {
+            return Text('');
+          }
+
+          Client client = Client.fromSnapshot(snapshot.data);
+
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(client.name),
+              Text(formatDate(order.date)),
+            ],
+          );
+        },
+      ),
       subtitle: StreamBuilder<DocumentSnapshot>(
         stream: order.productRef.snapshots(),
         builder: (context, snapshot) {
@@ -74,9 +106,22 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
           Product product = Product.fromSnapshot(snapshot.data);
 
-          return Text(product.name);
+          return Text(
+              '${product.name} => ${order.productAmount} kq * ${order.productPrice} AZN = ${order.productAmount * order.productPrice} AZN');
         },
       ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return OrderShowScreen(
+                order: order,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:accountant/models/client.dart';
 import 'package:accountant/screens/client/client_create.dart';
+import 'package:accountant/screens/client/client_show.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,10 +14,13 @@ class _ClientListScreenState extends State<ClientListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Klientler'),
+        title: Text('Müştərilər'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('clients').snapshots(),
+        stream: Firestore.instance
+            .collection('clients')
+            // .orderBy('name')
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
@@ -43,7 +47,7 @@ class _ClientListScreenState extends State<ClientListScreen> {
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
     if (documents.length == 0) {
       return Center(
-        child: Text('Client yoxdur'),
+        child: Text('Müştəri yoxdur'),
       );
     }
 
@@ -63,6 +67,16 @@ class _ClientListScreenState extends State<ClientListScreen> {
     return ListTile(
       title: Text(client.name),
       trailing: Text('${client.balance} AZN'),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return ClientShowScreen(client: client);
+            },
+          ),
+        );
+      },
     );
   }
 }

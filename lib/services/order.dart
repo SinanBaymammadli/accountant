@@ -32,16 +32,6 @@ class OrderService {
             .update(clientRef, {'balance': client.balance + paymentAmount});
       }
 
-      // await transaction.update(orderRef, {
-      //   'client_ref': clientRef,
-      //   'product_ref': productRef,
-      //   'product_amount': productAmount,
-      //   'product_price': productPrice,
-      //   'date': Timestamp.now(),
-      //   'is_buy': isBuy,
-      //   'payment_ref': paymentRef,
-      // });
-
       await Firestore.instance.collection('orders').add({
         'client_ref': clientRef,
         'product_ref': productRef,
@@ -54,7 +44,8 @@ class OrderService {
 
       await transaction.update(clientRef, {
         'balance': num.parse(
-            (client.balance - productAmount * productPrice).toStringAsFixed(2))
+            (client.balance + (productAmount * productPrice) * (isBuy ? 1 : -1))
+                .toStringAsFixed(2))
       });
     });
   }

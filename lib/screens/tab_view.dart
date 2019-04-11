@@ -20,8 +20,8 @@ class _TabViewState extends State<TabView> {
   final List<Widget> _tabs = [
     DashboardScreen(),
     OrderListScreen(),
-    ClientListScreen(),
     PaymentListScreen(),
+    ClientListScreen(),
     ProductListScreen(),
   ];
 
@@ -61,18 +61,18 @@ class _TabViewState extends State<TabView> {
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.attach_money),
                 title: Text(
-                  "Klientler",
+                  "Ödəmələr",
                   style: TextStyle(
                     fontSize: 12,
                   ),
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
+                icon: Icon(Icons.person),
                 title: Text(
-                  "Odeme",
+                  "Müştərilər",
                   style: TextStyle(
                     fontSize: 12,
                   ),
