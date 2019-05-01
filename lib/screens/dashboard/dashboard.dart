@@ -48,20 +48,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
           });
 
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('Gelir:'),
                   Text('$income AZN'),
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('Xerc:'),
                   Text('$expense AZN'),
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('Xalis gelir:'),
                   Text('${income - expense} AZN'),

@@ -109,7 +109,7 @@ class _OrderCreateScreenState extends State<OrderCreateScreen> {
         await os.create(
           clientRef: _selectedClient.ref,
           productRef: _selectedProduct.ref,
-          productAmount: int.parse(_amountController.text),
+          productAmount: double.parse(_amountController.text),
           productPrice: double.parse(_priceController.text),
           isBuy: _isBuy,
           hasPayment: _hasPayment,
@@ -227,14 +227,14 @@ class _OrderCreateScreenState extends State<OrderCreateScreen> {
               padding: const EdgeInsets.only(bottom: 20),
               child: TextFormField(
                 decoration: InputDecoration(hintText: 'Miqdar kq'),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 controller: _amountController,
                 validator: (val) {
                   if (val.isEmpty) {
                     return "Miqdar yazın";
                   }
 
-                  if (!isInt(val)) {
+                  if (!isFloat(val)) {
                     return "Miqdar düzgün deyil.";
                   }
                 },

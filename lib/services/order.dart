@@ -7,7 +7,7 @@ class OrderService {
     @required DocumentReference clientRef,
     @required DocumentReference productRef,
     @required bool isBuy,
-    @required int productAmount,
+    @required double productAmount,
     @required double productPrice,
     @required bool hasPayment,
     int paymentAmount,
@@ -43,9 +43,8 @@ class OrderService {
       });
 
       await transaction.update(clientRef, {
-        'balance': num.parse(
-            (client.balance + (productAmount * productPrice) * (isBuy ? 1 : -1))
-                .toStringAsFixed(2))
+        'balance': client.balance +
+            (productAmount * productPrice).round() * (isBuy ? 1 : -1)
       });
     });
   }

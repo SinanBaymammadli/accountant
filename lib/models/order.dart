@@ -4,7 +4,7 @@ class Order {
   final DocumentReference ref;
   final DocumentReference productRef;
   final DocumentReference clientRef;
-  final int productAmount;
+  final double productAmount;
   final double productPrice;
   final bool isBuy;
   final DateTime date;
@@ -17,7 +17,7 @@ class Order {
         assert(map['client_ref'] != null),
         clientRef = map['client_ref'],
         assert(map['product_amount'] != null),
-        productAmount = map['product_amount'],
+        productAmount = double.parse(map['product_amount'].toString()),
         assert(map['product_price'] != null),
         productPrice = double.parse(map['product_price'].toString()),
         assert(map['is_buy'] != null),

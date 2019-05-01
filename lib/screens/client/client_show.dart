@@ -13,14 +13,27 @@ class ClientShowScreen extends StatefulWidget {
 class _ClientShowScreenState extends State<ClientShowScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.client.name),
-      ),
-      body: Center(
-        child: Text(
-          '${widget.client.balance} AZN',
-          style: TextStyle(fontSize: 30),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('${widget.client.name} (${widget.client.balance} AZN)'),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: 'Ödəmələr',
+              ),
+              Tab(
+                text: 'Alqi',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            Text('odenisler'),
+            Text('alqi'),
+          ],
         ),
       ),
     );

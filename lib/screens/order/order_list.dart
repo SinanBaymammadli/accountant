@@ -107,7 +107,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
           Product product = Product.fromSnapshot(snapshot.data);
 
           return Text(
-              '${product.name} => ${order.productAmount} kq * ${order.productPrice} AZN = ${order.productAmount * order.productPrice} AZN');
+              '${product.name} => ${order.productAmount} kq * ${order.productPrice} AZN = ${(order.productAmount * order.productPrice).round()} AZN');
         },
       ),
       onTap: () {

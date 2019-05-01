@@ -66,7 +66,7 @@ class _ClientListScreenState extends State<ClientListScreen> {
 
     return ListTile(
       title: Text(client.name),
-      trailing: Text('${client.balance} AZN'),
+      trailing: Text('Balans: ${client.balance} AZN'),
       onTap: () {
         Navigator.push(
           context,
