@@ -1,4 +1,4 @@
-import 'package:accountant/helpers/isToday.dart';
+import 'package:accountant/components/datetime_picker.dart';
 import 'package:accountant/models/payment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,22 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   Firestore firestore = Firestore();
+  DateTime _fromDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+    0,
+    0,
+    0,
+  );
+  DateTime _toDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+    23,
+    59,
+    59,
+  );
 
   @override
   void initState() {
@@ -23,57 +39,112 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: Text('Statistika'),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('payments').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          int expense = 0;
-          int income = 0;
-
-          snapshot.data.documents.forEach((doc) {
-            final payment = Payment.fromSnapshot(doc);
-
-            if (isToday(payment.date)) {
-              if (payment.toUs) {
-                income += payment.amount;
-              } else {
-                expense += payment.amount;
+      body: ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: DateTimePicker(
+                    labelText: 'From',
+                    selectedDate: _fromDate,
+                    selectDate: (DateTime date) {
+                      print(date);
+                      setState(() {
+                        _fromDate = date;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 24),
+                Expanded(
+                  child: DateTimePicker(
+                    labelText: 'To',
+                    selectedDate: _toDate,
+                    selectDate: (DateTime date) {
+                      setState(() {
+                        _toDate = DateTime(
+                          date.year,
+                          date.month,
+                          date.day,
+                          23,
+                          59,
+                          59,
+                        );
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance
+                .collection('payments')
+                .where('date', isGreaterThanOrEqualTo: _fromDate)
+                .where('date', isLessThanOrEqualTo: _toDate)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-            }
-          });
 
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
+              int expense = 0;
+              int income = 0;
+
+              snapshot.data.documents.forEach((doc) {
+                final payment = Payment.fromSnapshot(doc);
+
+                if (payment.toUs) {
+                  income += payment.amount;
+                } else {
+                  expense += payment.amount;
+                }
+              });
+
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Gelir:'),
-                  Text('$income AZN'),
+                  ListTile(
+                    title: Text(
+                      'Gelir:',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    trailing: Text(
+                      '$income AZN',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Xerc:',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    trailing: Text(
+                      '$expense AZN',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text(
+                      'Xalis gelir:',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    trailing: Text(
+                      '${income - expense} AZN',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Xerc:'),
-                  Text('$expense AZN'),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Xalis gelir:'),
-                  Text('${income - expense} AZN'),
-                ],
-              ),
-            ],
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
