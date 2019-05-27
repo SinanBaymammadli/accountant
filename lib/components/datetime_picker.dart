@@ -26,7 +26,6 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valueStyle = Theme.of(context).textTheme.title;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -35,7 +34,6 @@ class DateTimePicker extends StatelessWidget {
           child: InputDropdown(
             labelText: labelText,
             valueText: DateFormat.yMMMd().format(selectedDate),
-            valueStyle: valueStyle,
             onPressed: () {
               _selectDate(context);
             },

@@ -52,6 +52,7 @@ class _ClientListScreenState extends State<ClientListScreen> {
     }
 
     return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 80),
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int index) {

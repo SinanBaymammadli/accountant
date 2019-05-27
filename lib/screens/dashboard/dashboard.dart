@@ -48,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: <Widget>[
                 Expanded(
                   child: DateTimePicker(
-                    labelText: 'From',
+                    labelText: 'Başlanğıc tarix',
                     selectedDate: _fromDate,
                     selectDate: (DateTime date) {
                       print(date);
@@ -61,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 SizedBox(width: 24),
                 Expanded(
                   child: DateTimePicker(
-                    labelText: 'To',
+                    labelText: 'Son tarix',
                     selectedDate: _toDate,
                     selectDate: (DateTime date) {
                       setState(() {
@@ -110,35 +110,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ListTile(
-                    title: Text(
-                      'Gelir:',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: Text(
-                      '$income AZN',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    title: Text('Gelir:'),
+                    trailing: Text('$income AZN'),
                   ),
                   ListTile(
-                    title: Text(
-                      'Xerc:',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: Text(
-                      '$expense AZN',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    title: Text('Xerc:'),
+                    trailing: Text('$expense AZN'),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(
-                      'Xalis gelir:',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: Text(
-                      '${income - expense} AZN',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    title: Text('Xalis gelir:'),
+                    trailing: Text('${income - expense} AZN'),
                   ),
                 ],
               );

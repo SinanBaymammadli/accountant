@@ -30,7 +30,7 @@ class _ClientShowScreenState extends State<ClientShowScreen> {
                 text: 'Ödəmələr',
               ),
               Tab(
-                text: 'Alqi',
+                text: 'Alqı-satqı',
               ),
             ],
           ),
@@ -123,7 +123,7 @@ class _ClientShowScreenState extends State<ClientShowScreen> {
       BuildContext context, List<DocumentSnapshot> documents) {
     if (documents.length == 0) {
       return Center(
-        child: Text('Alqi-satgi yoxdur'),
+        child: Text('Alqı-satqı yoxdur'),
       );
     }
 
@@ -139,8 +139,6 @@ class _ClientShowScreenState extends State<ClientShowScreen> {
 
   Widget _buildOrderListItem(BuildContext context, DocumentSnapshot document) {
     final order = Order.fromSnapshot(document);
-
-    print('here: ${order.productRef.toString()}');
 
     return ListTile(
       leading: order.isBuy

@@ -139,7 +139,7 @@ class _PaymentCreateScreenState extends State<PaymentCreateScreen> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text("Odenis alinir"),
+                      Text("Ödəniş alınır"),
                       Radio(
                         value: true,
                         groupValue: _toUs,
@@ -149,7 +149,7 @@ class _PaymentCreateScreenState extends State<PaymentCreateScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      Text("Odenis edilir"),
+                      Text("Ödəniş edilir"),
                       Radio(
                         value: false,
                         groupValue: _toUs,

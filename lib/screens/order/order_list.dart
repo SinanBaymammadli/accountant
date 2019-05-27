@@ -17,7 +17,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alqi-Satgi'),
+        title: Text('Alqı-Satqı'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
@@ -50,11 +50,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
   Widget _buildList(BuildContext context, List<DocumentSnapshot> documents) {
     if (documents.length == 0) {
       return Center(
-        child: Text('Alqi-satgi yoxdur'),
+        child: Text('Alqı-satqı yoxdur'),
       );
     }
 
     return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 80),
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int index) {
@@ -66,8 +67,6 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     final order = Order.fromSnapshot(document);
-
-    print('here: ${order.productRef.toString()}');
 
     return ListTile(
       leading: order.isBuy

@@ -48,6 +48,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     }
 
     return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 80),
       itemCount: documents.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int index) {

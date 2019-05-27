@@ -54,7 +54,7 @@ class _TabViewState extends State<TabView> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.airport_shuttle),
                 title: Text(
-                  "Alqi-Satgi",
+                  "Alqı-Satqı",
                   style: TextStyle(
                     fontSize: 12,
                   ),

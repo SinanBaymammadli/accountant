@@ -18,7 +18,7 @@ class _OrderCreateScreenState extends State<OrderCreateScreen> {
   final _amountController = TextEditingController();
   final _priceController = TextEditingController();
   final _paymentController = TextEditingController();
-  bool _isBuy;
+  bool _isBuy = true;
   bool _hasPayment = true;
   bool _loading = false;
   final _formKey = GlobalKey<FormState>();
@@ -174,28 +174,6 @@ class _OrderCreateScreenState extends State<OrderCreateScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: SizedBox(
-                height: 60,
-                child: DropdownButton<Product>(
-                  hint: Text('Mali secin'),
-                  isExpanded: true,
-                  value: _selectedProduct,
-                  onChanged: (Product newProduct) {
-                    setState(() {
-                      _selectedProduct = newProduct;
-                    });
-                  },
-                  items: _products.map((Product product) {
-                    return DropdownMenuItem(
-                      value: product,
-                      child: Text(product.name),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -221,6 +199,28 @@ class _OrderCreateScreenState extends State<OrderCreateScreen> {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: SizedBox(
+                height: 60,
+                child: DropdownButton<Product>(
+                  hint: Text('Mali secin'),
+                  isExpanded: true,
+                  value: _selectedProduct,
+                  onChanged: (Product newProduct) {
+                    setState(() {
+                      _selectedProduct = newProduct;
+                    });
+                  },
+                  items: _products.map((Product product) {
+                    return DropdownMenuItem(
+                      value: product,
+                      child: Text(product.name),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
             Padding(
